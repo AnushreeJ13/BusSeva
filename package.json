@@ -2,14 +2,18 @@
   "name": "busseva-admin",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.544.0",
+    "mongoose": "^8.18.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
@@ -18,11 +22,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "craco start",
-  "build": "craco build",
-  "test": "craco test",
-  "eject": "react-scripts eject"
-},
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -42,9 +46,9 @@
     ]
   },
   "devDependencies": {
-  "tailwindcss": "^4.1.13",
-  "postcss": "^8.4.21",
-  "autoprefixer": "^10.4.19",
-  "@craco/craco": "^7.1.0"
+    "@craco/craco": "^7.1.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^4.1.13"
   }
 }

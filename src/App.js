@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
+
 import LoadingPage from "./loading";
-import SignInForm from "./login";
 import {
   Calendar,
   MapPin,
@@ -550,7 +551,11 @@ const BusSevaHomepage = () => {
                 <div style={styles.logoIcon}>
                   <Bus style={{ width: 24, height: 24, color: "white" }} />
                 </div>
-                <span style={styles.logoText}>BusSeva</span>
+                <span style={styles.logoText}>
+                  <a href="#home" style={styles.navLink}>
+                    BusSeva
+                  </a>
+                </span>
               </div>
 
               {!isMobile && (
@@ -570,13 +575,10 @@ const BusSevaHomepage = () => {
                 </div>
               )}
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <button
-                  className="pressable"
-                  style={styles.adminBtn}
-                  onClick={() => setShowLogin(true)}
-                >
+                <Link to="/login" className="pressable" style={styles.adminBtn}>
                   Admin Login
-                </button>
+                </Link>
+
                 {isMobile && (
                   <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

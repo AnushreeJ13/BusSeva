@@ -21,8 +21,8 @@
     "react-i18next": "^11.18.6",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.4.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -50,7 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
+    "@craco/craco": "^6.4.5",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.21",
     "tailwindcss": "^4.1.13"

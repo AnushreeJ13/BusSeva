@@ -174,7 +174,7 @@ const BusSevaHomepage = () => {
       searchBox: {
         position: "relative",
         maxWidth: "1000px",
-        margin: "0 auto 48px",
+        margin: "20px auto 48px",
         background: "white",
         borderRadius: "18px",
         boxShadow: "0 30px 50px -20px rgba(2,6,23,0.25)",

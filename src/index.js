@@ -6,6 +6,7 @@ import App from "./App";
 import Login from "./login";
 import reportWebVitals from "./reportWebVitals";
 import BusSevaManagementDashboard from "./admin";
+import "./i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

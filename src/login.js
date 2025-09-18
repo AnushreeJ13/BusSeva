@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { useTranslation } from "react-i18next"; // ADD THIS IMPORT
+import LanguageSwitcher from "./components/LanguageSwitcher";
 const styles = `
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -169,6 +170,9 @@ const SignForm = () => {
 
   // idle | loading | success
   const [status, setStatus] = useState("idle");
+
+  const { t, i18n } = useTranslation(); // ADD THIS LINE
+
   const isLoading = status === "loading";
 
   const togglePassword = () =>
@@ -199,20 +203,16 @@ const SignForm = () => {
           setStatus("success");
           showNotification(
             isSignup
-              ? "Signup successful! You can now sign in."
-              : "Login successful! Welcome to BusSeva!",
+              ? t("notification_signup_success")
+              : t("notification_login_success"),
             "success"
           );
 
           setTimeout(() => {
-            // Reset visual state back
             setStatus("idle");
-
             if (!isSignup) {
-              // Redirect after successful login
               window.location.href = "http://localhost:3000";
             } else {
-              // After successful signup, switch to sign in and clear fields
               setIsSignup(false);
               setEmail("");
               setPassword("");
@@ -228,7 +228,6 @@ const SignForm = () => {
         throw new Error(`Unexpected server response: ${text}`);
       }
     } catch (error) {
-      // CRITICAL: Clear controlled inputs on error so UI resets
       setStatus("idle");
       setEmail("");
       setPassword("");
@@ -239,40 +238,39 @@ const SignForm = () => {
   const buttonLabel =
     status === "success"
       ? isSignup
-        ? "Account Created! 🎉"
-        : "Welcome Aboard! 🎉"
+        ? t("success_signup")
+        : t("success_login")
       : isSignup
-      ? "Sign Up"
-      : "Sign In";
+      ? t("signup_button")
+      : t("login_button");
 
   return (
     <>
       <style>{styles}</style>
+      <LanguageSwitcher /> {/* ADD THIS LINE */}
       <div className="login-container">
         <div className="login-header">
-          <div className="bus-icon">🚌</div>
-          <div className="logo">BusSeva</div>
+          <div className="bus-icon">{t("bus_icon")}</div>
+          <div className="logo">{t("app_name")}</div>
           <div className="welcome-text">
-            {isSignup ? "Create your account" : "Welcome back!"}
+            {isSignup ? t("welcome_text_signup") : t("welcome_text_login")}
           </div>
           <div className="subtitle">
-            {isSignup
-              ? "Sign up to start your journey"
-              : "Sign in to continue your journey"}
+            {isSignup ? t("subtitle_signup") : t("subtitle_login")}
           </div>
         </div>
 
         <form className="login-form" onSubmit={handleFormSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="email">
-              Email Address
+              {t("email_label")}
             </label>
             <div className="input-wrapper">
               <input
                 type="email"
                 id="email"
                 className="form-input"
-                placeholder="Enter your email"
+                placeholder={t("email_placeholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
@@ -285,14 +283,14 @@ const SignForm = () => {
 
           <div className="form-group">
             <label className="form-label" htmlFor="password">
-              Password
+              {t("password_label")}
             </label>
             <div className="input-wrapper">
               <input
                 type={passwordType}
                 id="password"
                 className="form-input"
-                placeholder="Enter your password"
+                placeholder={t("password_placeholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
@@ -306,7 +304,9 @@ const SignForm = () => {
                 disabled={isLoading}
                 aria-label="Toggle password visibility"
               >
-                {passwordType === "password" ? "👁" : "🙈"}
+                {passwordType === "password"
+                  ? t("show_password")
+                  : t("hide_password")}
               </button>
             </div>
           </div>
@@ -328,21 +328,18 @@ const SignForm = () => {
               onClick={(e) => {
                 e.preventDefault();
                 setIsSignup((prev) => !prev);
-                // Clear controlled inputs and visual state on mode switch
                 setStatus("idle");
                 setEmail("");
                 setPassword("");
                 showNotification(
                   isSignup
-                    ? "Switched to Sign In mode."
-                    : "Switched to Sign Up mode.",
+                    ? t("notification_switch_signin")
+                    : t("notification_switch_signup"),
                   "info"
                 );
               }}
             >
-              {isSignup
-                ? "Already have an account? Sign In"
-                : "Don't have an account? Sign Up"}
+              {isSignup ? t("switch_to_signin") : t("switch_to_signup")}
             </a>
           </div>
         </form>

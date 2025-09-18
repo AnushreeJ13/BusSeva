@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 import LoadingPage from "./loading";
 import {
@@ -23,6 +25,7 @@ import {
 } from "lucide-react";
 
 const BusSevaHomepage = () => {
+  const { t } = useTranslation();
   const [showLogin, setShowLogin] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -553,7 +556,7 @@ const BusSevaHomepage = () => {
                 </div>
                 <span style={styles.logoText}>
                   <a href="#home" style={styles.navLink}>
-                    BusSeva
+                    {t("app_name")}
                   </a>
                 </span>
               </div>
@@ -561,22 +564,22 @@ const BusSevaHomepage = () => {
               {!isMobile && (
                 <div style={styles.navLinks}>
                   <a href="#home" style={styles.navLink}>
-                    Home
+                    {t("nav_home")}
                   </a>
                   <a href="#how-it-works" style={styles.navLink}>
-                    How It Works
+                    {t("nav_how_it_works")}
                   </a>
                   <a href="#features" style={styles.navLink}>
-                    Features
+                    {t("nav_features")}
                   </a>
                   <a href="#platforms" style={styles.navLink}>
-                    Platforms
+                    {t("nav_platforms")}
                   </a>
                 </div>
               )}
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <Link to="/login" className="pressable" style={styles.adminBtn}>
-                  Admin Login
+                  {t("admin_login")}
                 </Link>
 
                 {isMobile && (
@@ -597,16 +600,16 @@ const BusSevaHomepage = () => {
             {mobileMenuOpen && isMobile && (
               <div style={styles.mobileMenu}>
                 <a href="#home" style={styles.mobileMenuItem}>
-                  Home
+                  {t("nav_home")}
                 </a>
                 <a href="#how-it-works" style={styles.mobileMenuItem}>
-                  How It Works
+                  {t("nav_how_it_works")}
                 </a>
                 <a href="#features" style={styles.mobileMenuItem}>
-                  Features
+                  {t("nav_features")}
                 </a>
                 <a href="#platforms" style={styles.mobileMenuItem}>
-                  Platforms
+                  {t("nav_platforms")}
                 </a>
               </div>
             )}
@@ -722,45 +725,42 @@ const BusSevaHomepage = () => {
 
             <div style={styles.container}>
               <h1 style={styles.heroTitle}>
-                Smart Public Transport for
-                <span style={styles.heroTitleBlue}>Tier-2 Cities</span>
+                {t("hero_title")}
+                <span style={styles.heroTitleBlue}>
+                  {t("hero_title_highlight")}
+                </span>
               </h1>
-              <p style={styles.heroSubtitle}>
-                Experience seamless bus travel with real-time tracking, verified
-                reviews, and value offers inspired by the leading booking flows
-                used by millions across India for confidence and convenience
-                [1][6][8][16].
-              </p>
+              <p style={styles.heroSubtitle}>{t("hero_subtitle")}</p>
 
               {/* Search */}
               <div style={styles.searchBox} className="hover-bump">
                 <div style={styles.searchGrid}>
                   <div style={styles.inputGroup}>
-                    <label style={styles.label}>From</label>
+                    <label style={styles.label}>{t("search_from")}</label>
                     <div style={styles.inputWrapper}>
                       <MapPin style={styles.inputIcon} />
                       <input
                         type="text"
-                        placeholder="Enter departure city"
+                        placeholder={t("from_placeholder")}
                         style={{ ...styles.input }}
                         className="input-focus"
                       />
                     </div>
                   </div>
                   <div style={styles.inputGroup}>
-                    <label style={styles.label}>To</label>
+                    <label style={styles.label}>{t("search_to")}</label>
                     <div style={styles.inputWrapper}>
                       <MapPin style={styles.inputIcon} />
                       <input
                         type="text"
-                        placeholder="Enter destination city"
+                        placeholder={t("to_placeholder")}
                         style={{ ...styles.input }}
                         className="input-focus"
                       />
                     </div>
                   </div>
                   <div style={styles.inputGroup}>
-                    <label style={styles.label}>Date</label>
+                    <label style={styles.label}>{t("search_date")}</label>
                     <div style={styles.inputWrapper}>
                       <Calendar style={styles.inputIcon} />
                       <input
@@ -775,7 +775,7 @@ const BusSevaHomepage = () => {
                       size={16}
                       style={{ marginRight: 8, verticalAlign: "middle" }}
                     />
-                    Search Buses
+                    {t("search_button")}
                   </button>
                 </div>
 
@@ -797,7 +797,7 @@ const BusSevaHomepage = () => {
                       gap: 6,
                     }}
                   >
-                    <Flame size={16} color="#f59e0b" /> Popular corridors
+                    <Flame size={16} color="#f59e0b" /> {t("popular_corridors")}
                   </span>
                   <div style={styles.cityMarqueeWrap}>
                     <div style={styles.cityMarquee}>
@@ -818,21 +818,21 @@ const BusSevaHomepage = () => {
                     {stats.buses}
                     <span style={styles.statSuffix}>+</span>
                   </div>
-                  <div style={styles.statLabel}>Active Buses</div>
+                  <div style={styles.statLabel}>{t("active_buses")}</div>
                 </div>
                 <div style={styles.statItem} className="hover-bump">
                   <div style={styles.statNumber}>
                     {stats.cities}
                     <span style={styles.statSuffix}>+</span>
                   </div>
-                  <div style={styles.statLabel}>Cities Connected</div>
+                  <div style={styles.statLabel}>{t("cities_connected")}</div>
                 </div>
                 <div style={styles.statItem} className="hover-bump">
                   <div style={styles.statNumber}>
                     {stats.travelers}
                     <span style={styles.statSuffix}>k+</span>
                   </div>
-                  <div style={styles.statLabel}>Happy Travelers</div>
+                  <div style={styles.statLabel}>{t("happy_travelers")}</div>
                 </div>
               </div>
             </div>

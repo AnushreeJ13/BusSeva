@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 
 const BusSevaHomepage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation(); // ADD THIS LINE
   const [showLogin, setShowLogin] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -581,7 +581,7 @@ const BusSevaHomepage = () => {
                 <Link to="/login" className="pressable" style={styles.adminBtn}>
                   {t("admin_login")}
                 </Link>
-
+                <LanguageSwitcher /> {/* ADD THIS LINE */}
                 {isMobile && (
                   <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -614,7 +614,6 @@ const BusSevaHomepage = () => {
               </div>
             )}
           </nav>
-
           {/* Hero */}
           <section id="home" style={styles.hero}>
             {/* Sky/Clouds/Cityline/BUS */}
@@ -837,7 +836,6 @@ const BusSevaHomepage = () => {
               </div>
             </div>
           </section>
-
           {/* How It Works */}
           <section
             id="how-it-works"
@@ -990,7 +988,6 @@ const BusSevaHomepage = () => {
               </div>
             </div>
           </section>
-
           {/* Features */}
           <section
             id="features"
@@ -1061,7 +1058,6 @@ const BusSevaHomepage = () => {
               </div>
             </div>
           </section>
-
           {/* Platforms */}
           <section
             id="platforms"
@@ -1191,7 +1187,6 @@ const BusSevaHomepage = () => {
               </div>
             </div>
           </section>
-
           {/* Offers/CTA */}
           <section style={styles.cta}>
             <div style={styles.container}>

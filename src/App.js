@@ -197,17 +197,18 @@ const BusSevaHomepage = () => {
       },
       inputWrapper: { position: "relative" },
       input: {
-        width: "100%",
-        paddingLeft: "42px",
-        paddingRight: "14px",
-        paddingTop: "12px",
-        paddingBottom: "12px",
-        border: "1px solid #e2e8f0",
-        borderRadius: "10px",
-        fontSize: "16px",
-        outline: "none",
-        transition: "box-shadow 0.2s ease, border-color 0.2s ease",
-      },
+  width: "100%",
+  paddingLeft: "42px",
+  paddingRight: "40px",  // more space for date picker icon
+  paddingTop: "12px",
+  paddingBottom: "12px",
+  border: "1px solid #e2e8f0",
+  borderRadius: "10px",
+  fontSize: "16px",
+  outline: "none",
+  transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+},
+
       inputIcon: {
         position: "absolute",
         left: "12px",
@@ -216,18 +217,21 @@ const BusSevaHomepage = () => {
         height: "20px",
         color: "#94a3b8",
       },
-      searchBtn: {
-        background: "linear-gradient(135deg,#2563eb,#1d4ed8)",
-        color: "white",
-        padding: "14px 18px",
-        borderRadius: "12px",
-        border: "none",
-        fontSize: "16px",
-        fontWeight: 800,
-        cursor: "pointer",
-        transition: "transform 0.12s ease, box-shadow 0.2s ease",
-        boxShadow: "0 12px 24px rgba(37,99,235,0.35)",
-      },
+     searchBtn: {
+      background: "linear-gradient(135deg,#2563eb,#1d4ed8)",
+      color: "white",
+      padding: "14px 18px",
+      borderRadius: "12px",
+      border: "none",
+      fontSize: "16px",
+      fontWeight: 800,
+      cursor: "pointer",
+      transition: "transform 0.12s ease, box-shadow 0.2s ease",
+      boxShadow: "0 12px 24px rgba(37,99,235,0.35)",
+      width: "100%",        // ensures it doesn’t overflow
+      whiteSpace: "nowrap", // keeps text in one line
+    },
+
       statsGrid: {
         display: "grid",
         gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",

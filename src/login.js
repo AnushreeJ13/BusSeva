@@ -186,8 +186,8 @@ const SignForm = () => {
 
     try {
       const url = isSignup
-        ? "https://busseva.onrender.com/api/signup"
-        : "https://busseva.onrender.com/api/login";
+        ? "http://localhost:5000/api/signup"
+        : "http://localhost:5000/api/login";
 
       const res = await fetch(url, {
         method: "POST",
@@ -212,7 +212,7 @@ const SignForm = () => {
             setStatus("idle");
             if (!isSignup) {
               // Redirect after successful login
-              window.location.href = "https://bus-seva.vercel.app/";
+              window.location.href = "http://localhost:3000/admin";
             } else {
               setIsSignup(false);
               setEmail("");

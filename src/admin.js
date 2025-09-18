@@ -14,8 +14,9 @@ import {
   AlertCircle,
   Clock,
 } from "lucide-react";
+import "./admin.css";
 
-const BusSevaManagementDashboard = () => {
+const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   // Sample data
@@ -25,7 +26,7 @@ const BusSevaManagementDashboard = () => {
       route: "Delhi - Agra",
       driver: "राम कुमार",
       status: "ACTIVE",
-      occupancy: 95,
+      occupancy: 85,
       lastUpdate: "2 mins ago",
     },
     {
@@ -60,81 +61,65 @@ const BusSevaManagementDashboard = () => {
     },
   ];
 
-  const getStatusColor = (status) => {
+  const getStatusColorClass = (status) => {
     switch (status) {
       case "ACTIVE":
-        return "bg-green-100 text-green-800";
+        return "status-active";
       case "MAINTENANCE":
-        return "bg-orange-100 text-orange-800";
+        return "status-maintenance";
       case "GHOST BUS":
-        return "bg-red-100 text-red-800";
+        return "status-ghost";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "";
     }
   };
 
-  const getOccupancyColor = (occupancy) => {
-    if (occupancy >= 80) return "bg-red-500";
-    if (occupancy >= 50) return "bg-green-500";
-    return "bg-gray-300";
+  const getOccupancyColorClass = (occupancy) => {
+    if (occupancy >= 80) return "occupancy-high";
+    if (occupancy >= 50) return "occupancy-medium";
+    return "";
   };
 
-  const StatCard = ({ title, value, icon: Icon, color }) => (
-    <div className={`bg-white rounded-lg shadow-sm border-l-4 ${color} p-6`}>
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
-        </div>
-        <div
-          className={`p-3 rounded-full ${color
-            .replace("border-l-", "bg-")
-            .replace("-500", "-100")}`}
-        >
-          <Icon
-            className={`h-6 w-6 ${color
-              .replace("border-l-", "text-")
-              .replace("-500", "-600")}`}
-          />
+  const StatCard = ({ title, value, icon: Icon }) => (
+    <div className="stat-card">
+      <p className="stat-card-title">{title}</p>
+      <div className="stat-card-content">
+        <p className="stat-card-value">{value}</p>
+        <div className="stat-card-icon-container">
+          <Icon className="stat-card-icon" />
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="dashboard-container">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
-                <Bus className="h-5 w-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-gray-900">BusSeva</h1>
-            </div>
+      <header className="header-container">
+        <div className="header-logo">
+          <div className="logo-icon-bg">
+            <Bus size={20} color="#fff" />
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-600">Welcome back, Admin</div>
-            <div className="relative">
-              <Bell className="h-5 w-5 text-gray-600" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                3
-              </span>
-            </div>
-            <button className="bg-red-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-red-700 transition-colors">
-              <Plus className="h-4 w-4" />
-              <span>Add Bus</span>
-            </button>
+          <h1 className="logo-text">BusSeva</h1>
+        </div>
+        <div className="header-actions">
+          <div className="welcome-text">Welcome back, Admin</div>
+          <div className="notification-bell">
+            <Bell size={20} />
+            <span className="notification-badge">3</span>
           </div>
+          <button className="add-bus-btn">
+            <Plus size={16} />
+            <span>Add Bus</span>
+          </button>
         </div>
       </header>
 
-      <div className="flex">
+      <div className="main-layout">
         {/* Sidebar */}
-        <aside className="w-64 bg-white shadow-sm min-h-screen">
-          <nav className="p-4">
-            <ul className="space-y-2">
+        <aside className="sidebar">
+          <nav>
+            <ul className="sidebar-nav">
               {[
                 { id: "dashboard", label: "Dashboard", icon: BarChart3 },
                 { id: "buses", label: "Bus Management", icon: Bus },
@@ -147,16 +132,12 @@ const BusSevaManagementDashboard = () => {
                 },
                 { id: "settings", label: "Settings", icon: Settings },
               ].map((item) => (
-                <li key={item.id}>
+                <li key={item.id} className="sidebar-nav-item">
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                      activeTab === item.id
-                        ? "bg-red-50 text-red-700 border-r-2 border-red-600"
-                        : "text-gray-600 hover:bg-gray-50"
-                    }`}
+                    className={activeTab === item.id ? "active" : ""}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon size={20} />
                     <span>{item.label}</span>
                   </button>
                 </li>
@@ -166,114 +147,66 @@ const BusSevaManagementDashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              BusSeva Dashboard
-            </h2>
-          </div>
+        <main className="main-content">
+          <h2 className="dashboard-title">BusSeva Dashboard</h2>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard
-              title="Total Buses"
-              value="24"
-              icon={Bus}
-              color="border-l-blue-500"
-            />
-            <StatCard
-              title="Active Drivers"
-              value="18"
-              icon={Users}
-              color="border-l-green-500"
-            />
-            <StatCard
-              title="Ghost Buses"
-              value="3"
-              icon={AlertTriangle}
-              color="border-l-red-500"
-            />
-            <StatCard
-              title="Today's Revenue"
-              value="₹45K"
-              icon={TrendingUp}
-              color="border-l-purple-500"
-            />
+          <div className="stats-grid">
+            <StatCard title="Total Buses" value="24" icon={Bus} />
+            <StatCard title="Active Drivers" value="18" icon={Users} />
+            <StatCard title="Ghost Buses" value="3" icon={AlertTriangle} />
+            <StatCard title="Today's Revenue" value="₹45K" icon={TrendingUp} />
           </div>
 
           {/* Live Bus Status */}
-          <div className="bg-white rounded-lg shadow-sm mb-8">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-red-600" />
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Live Bus Status
-                </h3>
+          <div className="live-status-card">
+            <div className="card-header">
+              <div className="card-title-group">
+                <MapPin size={20} color="#dc2626" />
+                <h3>Live Bus Status</h3>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
+            <div className="table-responsive">
+              <table className="bus-table">
+                <thead>
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Bus Number
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Route
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Driver
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Occupancy
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Last Update
-                    </th>
+                    <th>Bus Number</th>
+                    <th>Route</th>
+                    <th>Driver</th>
+                    <th>Status</th>
+                    <th>Occupancy</th>
+                    <th>Last Update</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {busData.map((bus, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {bus.number}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {bus.route}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {bus.driver}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={index}>
+                      <td>{bus.number}</td>
+                      <td>{bus.route}</td>
+                      <td>{bus.driver}</td>
+                      <td>
                         <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
+                          className={`status-pill ${getStatusColorClass(
                             bus.status
                           )}`}
                         >
                           {bus.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                      <td>
+                        <div className="occupancy-cell">
+                          <div className="occupancy-bar-container">
                             <div
-                              className={`h-2 rounded-full ${getOccupancyColor(
+                              className={`occupancy-bar ${getOccupancyColorClass(
                                 bus.occupancy
                               )}`}
                               style={{ width: `${bus.occupancy}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm text-gray-600">
-                            {bus.occupancy}%
-                          </span>
+                          <span>{bus.occupancy}%</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {bus.lastUpdate}
-                      </td>
+                      <td>{bus.lastUpdate}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -282,39 +215,30 @@ const BusSevaManagementDashboard = () => {
           </div>
 
           {/* Recent Alerts */}
-          <div className="bg-white rounded-lg shadow-sm">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center space-x-2">
-                <AlertCircle className="h-5 w-5 text-orange-600" />
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Recent Alerts
-                </h3>
+          <div className="alerts-card">
+            <div className="card-header">
+              <div className="card-title-group">
+                <AlertCircle size={20} color="#dc2626" />
+                <h3>Recent Alerts</h3>
               </div>
             </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {alerts.map((alert, index) => (
+            <div className="alerts-list">
+              {alerts.map((alert, index) => (
+                <div key={index} className="alert-item">
                   <div
-                    key={index}
-                    className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg"
-                  >
-                    <div
-                      className={`flex-shrink-0 w-2 h-2 rounded-full mt-2 ${
-                        alert.type === "ghost" ? "bg-red-500" : "bg-orange-500"
-                      }`}
-                    ></div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-900">{alert.message}</p>
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
-                          <Clock className="h-3 w-3" />
-                          <span>{alert.time}</span>
-                        </div>
-                      </div>
+                    className={`alert-dot ${
+                      alert.type === "ghost" ? "dot-ghost" : "dot-maintenance"
+                    }`}
+                  ></div>
+                  <div className="alert-content">
+                    <p className="alert-message">{alert.message}</p>
+                    <div className="alert-time">
+                      <Clock size={12} />
+                      <span>{alert.time}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </main>
@@ -322,5 +246,9 @@ const BusSevaManagementDashboard = () => {
     </div>
   );
 };
+
+function BusSevaManagementDashboard() {
+  return <Dashboard />;
+}
 
 export default BusSevaManagementDashboard;

@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://bus-seva.vercel.app",
+      "http://localhost:5173",
+      "https://busseva.vercel.app/",
       "https://busseva.onrender.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

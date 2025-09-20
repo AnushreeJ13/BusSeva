@@ -1,5 +1,4 @@
-require("dotenv").config(); // Load .env file
-
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,30 +8,30 @@ const jwt = require("jsonwebtoken");
 const app = express();
 app.use(express.json());
 
-// ✅ CORS setup (frontend at :3000, plus deployed domains)
+// ✅ CORS setup with all possible frontend URLs
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://bus-seva.vercel.app",
-      "https://busseva.onrender.com",
+      "http://localhost:5173",      // Vite dev server
+      "http://localhost:3000",      // Create React App dev server
+      "https://bus-seva.vercel.app", // Vercel frontend
+      "https://busseva.onrender.com" // Your deployed frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
 
-// ✅ Explicitly handle preflight requests
+// ✅ Handle preflight requests
 app.options("*", cors());
 
 // 🔗 MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB connected"))
+.catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // 👤 User schema
 const userSchema = new mongoose.Schema({
@@ -68,7 +67,7 @@ const authenticateToken = (req, res, next) => {
     return res.status(401).json({ message: "Access token required" });
   }
   
-  jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key', (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET || '8pEYbiXS93bqV4MVYhcZ/VCSO+WhrXi0rfhL8FDiC4w=', (err, user) => {
     if (err) {
       return res.status(403).json({ message: "Invalid or expired token" });
     }
@@ -82,7 +81,6 @@ app.post("/api/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // Validate input
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Name, email and password are required" });
     }
@@ -100,10 +98,9 @@ app.post("/api/signup", async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    // Generate JWT token
     const token = jwt.sign(
       { userId: newUser._id }, 
-      process.env.JWT_SECRET || 'your-secret-key',
+      process.env.JWT_SECRET || '8pEYbiXS93bqV4MVYhcZ/VCSO+WhrXi0rfhL8FDiC4w=',
       { expiresIn: '7d' }
     );
 
@@ -143,10 +140,9 @@ app.post("/api/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { userId: user._id }, 
-      process.env.JWT_SECRET || 'your-secret-key',
+      process.env.JWT_SECRET || '8pEYbiXS93bqV4MVYhcZ/VCSO+WhrXi0rfhL8FDiC4w=',
       { expiresIn: '7d' }
     );
 

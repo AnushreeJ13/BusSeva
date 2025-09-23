@@ -14,7 +14,7 @@ app.use(
     origin: [
       "http://localhost:5173",      // Vite dev server
       "http://localhost:3000",      // Create React App dev server
-      "https://bus-seva.vercel.app", // Vercel frontend
+      "https://busseva.vercel.app", // Vercel frontend
       "https://busseva.onrender.com" // Your deployed frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
